@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arène des Légendes - Sélection</title>
+    <link rel="stylesheet" href="choixJoueur.css">
+</head>
+<body>
+    <div class="selection-container">
+        <h1>Préparation du Combat</h1>
+        
+        <div class="selection-section">
+            <h2>Nombre de Joueurs</h2>
+            <div class="options">
+                <button class="option-btn" data-players="2">2 Joueurs</button>
+                <button class="option-btn" data-players="3">3 Joueurs</button>
+                <button class="option-btn" data-players="4">4 Joueurs</button>
+            </div>
+        </div>
+        
+        <div class="selection-section">
+            <h2>Choisis ton Héros</h2>
+            <div class="hero-preview">
+            
+                <div class="hero-card chevalier" data-hero="chevalier">
+            
+                    <img src="D:/jeu_frontend/assests/chevalier.png" height="100" width="100">
+                    <h3>Chevalier</h3>
+                    <p>Force et endurance</p>
+                </div>
+                <div class="hero-card ninja" data-hero="ninja">
+                    <img src="D:/jeu_frontend/assests/ninja.png" height="100" width="100">
+                    <h3>Ninja</h3>
+                    <p>Vitesse et agilité</p>
+                </div>
+                <div class="hero-card sorcier" data-hero="sorcier">
+                    <img src="D:/jeu_frontend/assests/sorcier.png" height="100" width="100">
+                    <h3>Sorcier</h3>
+                    <p>Magie et puissance</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="selection-section">
+            <h2>Adversaires</h2>
+            <div id="opponents-container">
+                <p>Sélectionne d'abord le nombre de joueurs</p>
+            </div>
+        </div>
+        
+        <button class="start-btn" id="start-btn" disabled>Commencer la Bataille</button>
+    </div>
+    <script src="choixJoueur.js"></script>
+
+</body>
+</html>

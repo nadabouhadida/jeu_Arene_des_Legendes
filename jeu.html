@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Arène des Légendes</title>
+        <link rel="stylesheet" href="jeu.css">
+    </head>
+    <body> 
+        <div class="game-container">
+            <div class="left-panel">
+                <div class="hero-profile">
+                    <img  class="profile-image">
+                    <div class="hero-name"></div>
+                    <div class="hero-stats"></div>
+                    <div class="hero-stats">Pouvoir : <span id="special-cooldown">Prêt</span></div>
+                </div>
+
+                <div id="enemies-info"></div>
+            </div>
+            
+            <div class="arena" id="arena"></div>
+            
+            <div class="controls">
+                <h2>Actions</h2>
+                <div id="action-buttons">
+                    <button id="move-btn" disabled>Déplacer</button>
+                    <button id="attack-btn" disabled>Attaquer</button>
+                    <button id="special-btn" disabled>Pouvoir Spécial</button>
+                    <button id="defend-btn" disabled>Défendre</button>
+                    <button id="end-turn-btn">Fin du Tour</button>
+                </div>
+                <div class="dice-container">
+                    <div class="dice" id="dice">
+                       
+                        <div class="dice-face face-1"><div class="pip"></div></div>
+                        <div class="dice-face face-2"><div class="pip"></div><div class="pip"></div></div>
+                        <div class="dice-face face-3"><div class="pip"></div><div class="pip"></div><div class="pip"></div></div>
+                        <div class="dice-face face-4"><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div></div>
+                        <div class="dice-face face-5"><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div></div>
+                        <div class="dice-face face-6"><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div></div>
+                    </div>
+                </div>
+                
+                <button id="rollButton">Lancer le dé</button>
+                <div class="result" id="result"></div>
+            </div>
+        </div>
+        
+        <script src="jeu.js"></script>
+    </body>
+</html>

@@ -1,0 +1,545 @@
+body {
+    font-family: 'MedievalSharp', cursive, sans-serif;
+    background-color: #222;
+    color: #eee;
+    margin: 0;
+    padding: 60px;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #f0c14b;
+}
+
+.game-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 1400px;
+    margin: 0 auto;
+    gap: 40px;
+}
+
+.arena {
+    display: grid;
+    grid-template-columns: repeat(7, 80px);
+    grid-template-rows: repeat(7, 80px);
+    gap: 2px;
+    background-color: #444;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.cell {
+    width: 80px;
+    height: 80px;
+    background-color: #666;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.hero-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #f0c14b;
+}
+
+.health-bar {
+    position: absolute;
+    bottom: 5px;
+    width: 80%;
+    height: 5px;
+    background-color: #555;
+    border-radius: 2px;
+}
+
+.health-fill {
+    height: 100%;
+    background-color: #0f0;
+    border-radius: 2px;
+}
+
+.controls {
+    width: 200px;
+    height: 550px;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#action-buttons {
+    font-family: 'MedievalSharp', cursive, sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom:20px ;
+}
+
+#action-buttons button {
+    font-family: 'MedievalSharp', cursive, sans-serif;
+    background-color: #f0c14b;
+    color: #111;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 3px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:disabled {
+    background-color: #777;
+    cursor: not-allowed;
+}
+#action-buttons:disabled{
+    background-color: #777;
+}
+
+.left-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 180px;
+}
+
+.hero-profile {
+    background-color: #333;
+    color: #f0c14b;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.profile-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #f0c14b;
+    margin-bottom: 10px;
+}
+
+.hero-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.hero-stats {
+    font-size: 14px;
+}
+
+#enemies-info {
+    background-color: #333;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+#enemies-info h3 {
+    color: #f0c14b;
+    text-align: center;
+    margin-top: 0;
+}
+
+.info-box {
+    background-color: #444;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.hero-mini-image {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #f0c14b;
+}
+
+.dice-container {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    perspective: 800px;
+}
+
+.dice {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 1s ease;
+}
+
+.dice-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    background: #000;
+    border: 2px solid #f0c14b;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    padding: 6px;
+    box-sizing: border-box;
+}
+
+.pip {
+    width: 8px;
+    height: 8px;
+    background: #f0c14b;
+    border-radius: 50%;
+    align-self: center;
+    justify-self: center;
+}
+
+/* Positionnement des points sur les faces du dé */
+.face-1 .pip { grid-area: 2 / 2; }
+.face-2 .pip:nth-child(1) { grid-area: 1 / 1; }
+.face-2 .pip:nth-child(2) { grid-area: 3 / 3; }
+.face-3 .pip:nth-child(1) { grid-area: 1 / 1; }
+.face-3 .pip:nth-child(2) { grid-area: 2 / 2; }
+.face-3 .pip:nth-child(3) { grid-area: 3 / 3; }
+.face-4 .pip:nth-child(1) { grid-area: 1 / 1; }
+.face-4 .pip:nth-child(2) { grid-area: 1 / 3; }
+.face-4 .pip:nth-child(3) { grid-area: 3 / 1; }
+.face-4 .pip:nth-child(4) { grid-area: 3 / 3; }
+.face-5 .pip:nth-child(1) { grid-area: 1 / 1; }
+.face-5 .pip:nth-child(2) { grid-area: 1 / 3; }
+.face-5 .pip:nth-child(3) { grid-area: 2 / 2; }
+.face-5 .pip:nth-child(4) { grid-area: 3 / 1; }
+.face-5 .pip:nth-child(5) { grid-area: 3 / 3; }
+.face-6 .pip:nth-child(1) { grid-area: 1 / 1; }
+.face-6 .pip:nth-child(2) { grid-area: 1 / 3; }
+.face-6 .pip:nth-child(3) { grid-area: 2 / 1; }
+.face-6 .pip:nth-child(4) { grid-area: 2 / 3; }
+.face-6 .pip:nth-child(5) { grid-area: 3 / 1; }
+.face-6 .pip:nth-child(6) { grid-area: 3 / 3; }
+
+/* Positionnement des faces en 3D */
+.face-1 { transform: rotateY(0deg) translateZ(30px); }
+.face-2 { transform: rotateY(90deg) translateZ(30px); }
+.face-3 { transform: rotateY(180deg) translateZ(30px); }
+.face-4 { transform: rotateY(-90deg) translateZ(30px); }
+.face-5 { transform: rotateX(90deg) translateZ(30px); }
+.face-6 { transform: rotateX(-90deg) translateZ(30px); }
+
+#rollButton {
+    font-family: 'MedievalSharp', cursive, sans-serif;
+    padding: 10px 20px;
+    background-color: #f0c14b;
+    color: #111;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.result {
+    text-align: center;
+    font-weight: bold;
+    color: #f0c14b;
+    min-height: 20px;
+    font-size: 12px;
+}
+
+.selected {
+    box-shadow: 0 0 10px 5px gold;
+}
+
+.movable {
+    box-shadow: 0 0 10px 5px #4caf50;
+}
+
+.attackable {
+    box-shadow: 0 0 10px 5px #f44336;
+}
+
+#rollButton:disabled {
+    background-color: #777;
+    cursor: not-allowed;
+}
+
+/* Animation finale du dé */
+.final-dice {
+    transform: rotateX(15deg) rotateY(15deg) scale(0.8);
+    opacity: 0.8;
+    transition: all 0.5s ease;
+}
+
+ /* Ajoutez ces styles à la fin du fichier CSS */
+
+.cell {
+    transition: box-shadow 0.3s ease;
+}
+
+.cell:hover {
+    transform: scale(1.02);
+}
+
+.cell.movable:hover {
+    cursor: pointer;
+    transform: scale(1.03);
+    box-shadow: 0 0 15px 7px #4caf50;
+}
+
+#move-btn.active {
+    background-color: #4CAF50;
+    color: white;
+}
+.attackable {
+    box-shadow: 0 0 10px 5px rgba(255, 165, 0, 0.7);
+    cursor: pointer;
+}
+
+.enemy-target {
+    box-shadow: 0 0 10px 5px rgba(255, 0, 0, 0.7);
+}
+
+.attackable:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 15px 7px rgba(255, 165, 0, 0.9);
+}
+#special-cooldown.ready {
+    color: green;
+    font-weight: bold;
+}
+#special-cooldown.cooldown {
+    color: red;
+    font-weight: bold;
+}
+/* Style pour le bouton Rejouer */
+#result button {
+    margin-top: 5px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    background-color: #f0c14b;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#result button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+#result button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Écran de fin de jeu - Overlay */
+.game-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Conteneur principal */
+.end-game-container {
+    background: url('assets/parchment-texture.jpg') center/cover;
+    border: 4px double #f0c14b;
+    border-radius: 10px;
+    padding: 40px 60px;
+    text-align: center;
+    max-width: 600px;
+    width: 80%;
+    box-shadow: 0 0 30px rgba(240, 193, 75, 0.3),
+                0 0 60px rgba(0, 0, 0, 0.5),
+                inset 0 0 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+    animation: zoomIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Effet de parchemin vieilli */
+.end-game-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(210, 180, 140, 0.1);
+    pointer-events: none;
+}
+
+/* Titre principal */
+.end-game-message {
+    font-family: 'MedievalSharp', cursive;
+    font-size: 2.8rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    position: relative;
+    padding-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Style victoire/défaite */
+.end-game-message.victory {
+    color: #4CAF50;
+    text-shadow: 0 0 10px rgba(76, 175, 80, 0.7),
+                 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.end-game-message.defeat {
+    color: #F44336;
+    text-shadow: 0 0 10px rgba(244, 67, 54, 0.7),
+                 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Barre de séparation */
+.end-game-message::after {
+    content: '';
+    display: block;
+    width: 60%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #f0c14b, transparent);
+    margin: 15px auto 0;
+}
+
+/* Sous-message */
+.end-game-submessage {
+    font-family: 'MedievalSharp', cursive;
+    font-size: 1.4rem;
+    margin-bottom: 30px;
+    color: #e0d3b6;
+    line-height: 1.5;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+/* Bouton Rejouer */
+.restart-btn {
+    font-family: 'MedievalSharp', cursive;
+    background-color: #f0c14b;
+    color: #3a2a0f;
+    border: none;
+    padding: 12px 35px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3),
+                inset 0 1px 1px rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid #b88a3d;
+}
+
+/* Effet du bouton */
+.restart-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4),
+                inset 0 1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.restart-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3),
+                inset 0 1px 1px rgba(255, 255, 255, 0.2);
+}
+
+/* Effet de lueur dorée */
+.restart-btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 200%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(30deg);
+    transition: all 0.3s;
+}
+
+.restart-btn:hover::after {
+    left: 100%;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+    from { 
+        transform: scale(0.8) translateY(50px); 
+        opacity: 0; 
+    }
+    to { 
+        transform: scale(1) translateY(0); 
+        opacity: 1; 
+    }
+}
+
+/* Effets supplémentaires */
+.end-game-container {
+    perspective: 1000px;
+}
+
+.end-game-container-inner {
+    transform-style: preserve-3d;
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
+    50% { transform: translateY(-20px) rotateX(2deg) rotateY(2deg); }
+}
+
+/* Effet de parchemin froissé */
+.end-game-container::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 1px solid rgba(240, 193, 75, 0.3);
+    border-radius: 5px;
+    pointer-events: none;
+}
