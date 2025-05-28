@@ -11,9 +11,9 @@
     
     // Héros disponibles
     const heroes = [
-        { type: 'chevalier', name: 'Chevalier', image: '/assests/chevalier.png', desc: 'Force et endurance' },
-        { type: 'ninja', name: 'Ninja', image: '/assests/ninja.png', desc: 'Vitesse et agilité' },
-        { type: 'sorcier', name: 'Sorcier', image: '/assests/sorcier.png', desc: 'Magie et puissance' }
+        { type: 'chevalier', name: 'Chevalier', image: './assests/chevalier.png', desc: 'Force et endurance' },
+        { type: 'ninja', name: 'Ninja', image: './assests/ninja.png', desc: 'Vitesse et agilité' },
+        { type: 'sorcier', name: 'Sorcier', image: './assests/sorcier.png', desc: 'Magie et puissance' }
     ];
 
     // Objet pour stocker les paramètres du jeu
