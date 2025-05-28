@@ -379,7 +379,7 @@ function initGame() {
 }
 
 
-// Dans jeu.js, remplacez la fonction initGame() par ceci :
+
 function initGame() {
     createArena();
     
@@ -442,7 +442,7 @@ function initGame() {
     }, 50);
 }
 
-// Fonction utilitaire pour capitaliser la première lettre
+
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -490,7 +490,7 @@ function placeHero(hero) {
     container.className = 'hero-container';
     container.dataset.player = hero.player;
 
-    // Image du héros (inchangée)
+  
     const img = document.createElement('img');
     img.className = 'hero-image';
     img.src = hero.image;
@@ -627,7 +627,6 @@ function enableAttackMode() {
 function highlightNinjaAttackOptions() {
     const ninja = gameState.playerHero;
     
-    // 1. D'abord marquer toutes les cases attaquables (en rouge/jaune)
     const attackableCells = ninja.getAttackableCells(gameState.arenaSize, gameState.enemies);
     
     attackableCells.forEach(cellPos => {
@@ -643,7 +642,7 @@ function highlightNinjaAttackOptions() {
         }
     });
     
-    // 2. Ensuite marquer les cases de déplacement (en vert)
+ 
     const directions = ninja.getMoveDirections();
     
     directions.forEach(dir => {
@@ -672,7 +671,6 @@ function highlightNinjaAttackOptions() {
         }
     });
     
-    // Cas spécial : si le Ninja est adjacent à un ennemi, on peut choisir d'attaquer directement
     const adjacentEnemies = gameState.enemies.filter(enemy => {
         return Math.abs(enemy.x - ninja.x) + Math.abs(enemy.y - ninja.y) === 1;
     });
@@ -971,7 +969,7 @@ function resolveNormalAttack(rollValue) {
         updateEnemiesInfo();
         placeHeroes();
         
-        // Vérifier si tous les ennemis sont vaincus
+       
         if (gameState.enemies.length === 0) {
             endGame(true);
             return;
@@ -1184,7 +1182,7 @@ function handleCellClick(event) {
             }
         }
     }
-    // Cas où on clique sur une case non valide
+    
     else if (gameState.attackingMode || gameState.movingMode || gameState.specialAttackMode) {
         resultDisplay.textContent = "Action impossible sur cette case";
     }
