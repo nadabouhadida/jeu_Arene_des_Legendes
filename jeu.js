@@ -8,7 +8,7 @@ const HERO_CONFIG = {
         defense: 20, 
         range: 1, 
         move: 1,
-        image: './assests/chevalier.png'
+        image: 'D:/jeu_frontend/assests/chevalier.png'
     },
     'Ninja': { 
         health: 80, 
@@ -16,7 +16,7 @@ const HERO_CONFIG = {
         defense: 10, 
         range: 1, 
         move: 2,
-        image: './assests/ninja.png'
+        image: 'D:/jeu_frontend/assests/ninja.png'
     },
     'Sorcier': { 
         health: 70, 
@@ -24,7 +24,7 @@ const HERO_CONFIG = {
         defense: 5, 
         range: 3, 
         move: 1,
-        image: './assests/sorcier.png'
+        image: 'D:/jeu_frontend/assests/sorcier.png'
     }
 };
 
@@ -128,7 +128,8 @@ class Chevalier extends Hero {
             {dx: 0, dy: 1},  // bas
             {dx: -1, dy: 0}  // gauche
         ];
-
+        
+        // remplissage de tableau pour stocker les cases cibles 
         directions.forEach(dir => {
             const targetX = this.x + dir.dx;
             const targetY = this.y + dir.dy;
@@ -141,7 +142,7 @@ class Chevalier extends Hero {
 
         return attackableCells;
     }
-
+   // utilisation pouvoir spécial
     useSpecialAbility() {
         if (this.specialAvailable) {
             this.specialAvailable = false;
@@ -150,7 +151,7 @@ class Chevalier extends Hero {
         }
         return false;
     }
-
+    // décrémentation pour le pouvoir spécial
     reduceCooldown() {
         if (this.specialCooldown > 0) {
             this.specialCooldown--;
@@ -316,6 +317,7 @@ class HeroFactory {
 // FONCTIONS DU JEU
 // ======================
 
+
 function initGame() {
     createArena();
     
@@ -343,6 +345,7 @@ function initGame() {
         
         // Créer les ennemis
         gameState.enemies = gameSettings.opponents.map((opponent, index) => {
+            //tableau contenant les coordonnées des coins de l'arène
             const corners = [
                 {x: 0, y: gameState.arenaSize - 1},
                 {x: gameState.arenaSize - 1, y: 0}, 
@@ -378,71 +381,7 @@ function initGame() {
     }, 50);
 }
 
-
-
-function initGame() {
-    createArena();
-    
-    // Récupérer les paramètres du jeu depuis sessionStorage
-    const savedSettings = sessionStorage.getItem('gameSettings');
-    if (!savedSettings) {
-        // Rediriger vers la page de sélection si aucun paramètre n'est trouvé
-        window.location.href = 'choixJoueur.html';
-        return;
-    }
-    
-    const gameSettings = JSON.parse(savedSettings);
-    
-    setTimeout(() => {
-        // Créer le héros du joueur
-        gameState.playerHero = HeroFactory.createHero(
-            capitalizeFirstLetter(gameSettings.playerHero.type), // Convertit "chevalier" en "Chevalier"
-            {
-                name: 'Votre Héros',
-                x: 0,
-                y: 0,
-                player: 0
-            }
-        );
-        
-        // Créer les ennemis
-        gameState.enemies = gameSettings.opponents.map((opponent, index) => {
-            const corners = [
-                {x: 0, y: gameState.arenaSize - 1},
-                {x: gameState.arenaSize - 1, y: 0}, 
-                {x: gameState.arenaSize - 1, y: gameState.arenaSize - 1}
-            ];
-            
-            return HeroFactory.createHero(
-                capitalizeFirstLetter(opponent.type),
-                {
-                    name: `${opponent.name} ${index+1}`,
-                    x: corners[index].x,
-                    y: corners[index].y,
-                    player: index + 1
-                }
-            );
-        });
-        
-        placeHeroes();
-        updateEnemiesInfo();
-        updateHeroProfile();
-        
-        document.querySelectorAll('.cell').forEach(cell => {
-            cell.addEventListener('click', handleCellClick);
-        });
-        
-        document.getElementById('move-btn').addEventListener('click', enableMovementMode);
-        document.getElementById('attack-btn').addEventListener('click', enableAttackMode);
-        document.getElementById('special-btn').addEventListener('click', enableSpecialAttackMode);
-        document.getElementById('defend-btn').addEventListener('click', enableDefenseMode);
-        document.getElementById('end-turn-btn').addEventListener('click', endPlayerTurn);
-        
-        startDiceRollPhase();
-    }, 50);
-}
-
-
+// Fonction utilitaire pour capitaliser la première lettre
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -464,10 +403,10 @@ function updateHeroProfile() {
 }
 
 function placeHeroes() {
-    document.querySelectorAll('.hero-container').forEach(el => el.remove());
+    document.querySelectorAll('.hero-container').forEach(el => el.remove());// netoyage de position (héro existant)
     
-    placeHero(gameState.playerHero);
-    gameState.enemies.forEach(enemy => placeHero(enemy));
+    placeHero(gameState.playerHero); //place hero
+    gameState.enemies.forEach(enemy => placeHero(enemy));//placement des ennemies
     updateHeroProfile();
 }
 
@@ -490,7 +429,7 @@ function placeHero(hero) {
     container.className = 'hero-container';
     container.dataset.player = hero.player;
 
-  
+    // Image du héros (inchangée)
     const img = document.createElement('img');
     img.className = 'hero-image';
     img.src = hero.image;
@@ -627,6 +566,7 @@ function enableAttackMode() {
 function highlightNinjaAttackOptions() {
     const ninja = gameState.playerHero;
     
+    // 1. D'abord marquer toutes les cases attaquables (en rouge/jaune)
     const attackableCells = ninja.getAttackableCells(gameState.arenaSize, gameState.enemies);
     
     attackableCells.forEach(cellPos => {
@@ -642,7 +582,7 @@ function highlightNinjaAttackOptions() {
         }
     });
     
- 
+    // 2. Ensuite marquer les cases de déplacement (en vert)
     const directions = ninja.getMoveDirections();
     
     directions.forEach(dir => {
@@ -671,6 +611,7 @@ function highlightNinjaAttackOptions() {
         }
     });
     
+    // attaque directement 
     const adjacentEnemies = gameState.enemies.filter(enemy => {
         return Math.abs(enemy.x - ninja.x) + Math.abs(enemy.y - ninja.y) === 1;
     });
@@ -702,26 +643,6 @@ function highlightAttackableCells() {
     });
 }
 
-function highlightNinjaAttackableCells() {
-    document.querySelectorAll('.cell').forEach(cell => {
-        cell.classList.remove('attackable', 'enemy-target');
-    });
-
-    const ninja = gameState.playerHero;
-    const attackableCells = ninja.getAttackableCells(gameState.arenaSize, gameState.enemies);
-
-    attackableCells.forEach(cellPos => {
-        const cell = document.querySelector(`.cell[data-x="${cellPos.x}"][data-y="${cellPos.y}"]`);
-        if (cell) {
-            cell.classList.add('attackable');
-            
-            const enemyHere = gameState.enemies.find(e => e.x === cellPos.x && e.y === cellPos.y);
-            if (enemyHere) {
-                cell.classList.add('enemy-target');
-            }
-        }
-    });
-}
 
 function highlightChevalierAttackableCells() {
     document.querySelectorAll('.cell').forEach(cell => {
@@ -743,7 +664,7 @@ function highlightChevalierAttackableCells() {
         }
     });
 }
-
+//------------pouvoir spécial------------------
 function enableSpecialAttackMode() {
     if (gamePhase !== "playing" || currentPlayerTurn !== 0) return;
     
@@ -791,6 +712,27 @@ function enableSpecialAttackMode() {
         resultDisplay.textContent = "Sélectionnez une cible pour l'attaque spéciale (Cri de Guerre)";
     }
 }
+//pouvoir spécial ninja 
+function highlightNinjaAttackableCells() {
+    document.querySelectorAll('.cell').forEach(cell => {
+        cell.classList.remove('attackable', 'enemy-target');
+    });
+
+    const ninja = gameState.playerHero;
+    const attackableCells = ninja.getAttackableCells(gameState.arenaSize, gameState.enemies);
+
+    attackableCells.forEach(cellPos => {
+        const cell = document.querySelector(`.cell[data-x="${cellPos.x}"][data-y="${cellPos.y}"]`);
+        if (cell) {
+            cell.classList.add('attackable');
+            
+            const enemyHere = gameState.enemies.find(e => e.x === cellPos.x && e.y === cellPos.y);
+            if (enemyHere) {
+                cell.classList.add('enemy-target');
+            }
+        }
+    });
+}
 
 function highlightSpecialAttackCells() {
     document.querySelectorAll('.cell').forEach(cell => {
@@ -812,6 +754,8 @@ function highlightSpecialAttackCells() {
         });
     }
 }
+
+//------------défense-------------
 
 function enableDefenseMode() {
     if (gamePhase !== "playing" || currentPlayerTurn !== 0) return;
@@ -836,31 +780,6 @@ function enableDefenseMode() {
     document.getElementById('end-turn-btn').disabled = false;
 }
 
-function initiateAttack(enemy) {
-    gameState.attackingMode = false;
-    document.querySelectorAll('.cell').forEach(cell => {
-        cell.classList.remove('attackable', 'enemy-target');
-    });
-    
-    resultDisplay.textContent = "Lancez le dé pour attaquer !";
-    document.getElementById('rollButton').disabled = false;
-    document.getElementById('attack-btn').disabled = true;
-    document.getElementById('special-btn').disabled = !gameState.playerHero.specialAvailable;
-    document.getElementById('defend-btn').disabled = true;
-    document.getElementById('end-turn-btn').disabled = true;
-    
-    gameState.currentAttackTarget = enemy;
-    gameState.currentAttackCells = null;
-    
-    if (gameState.specialAttackMode) {
-        if (gameState.playerHero.type === 'Ninja') {
-            gameState.playerHero.useSpecialAbility();
-        } else if (gameState.playerHero.type === 'Chevalier') {
-            gameState.playerHero.useSpecialAbility();
-        }
-        updateHeroProfile();
-    }
-}
 
 function initiateSpecialAttack() {
     gameState.specialAttackMode = false;
@@ -903,6 +822,33 @@ function resolveAttack(rollValue) {
         resolveSpecialAttack(rollValue);
     } else {
         resolveNormalAttack(rollValue);
+    }
+}
+
+//lancer le dé d'attaque
+function initiateAttack(enemy) {
+    gameState.attackingMode = false;
+    document.querySelectorAll('.cell').forEach(cell => {
+        cell.classList.remove('attackable', 'enemy-target');
+    });
+    
+    resultDisplay.textContent = "Lancez le dé pour attaquer !";
+    document.getElementById('rollButton').disabled = false;
+    document.getElementById('attack-btn').disabled = true;
+    document.getElementById('special-btn').disabled = !gameState.playerHero.specialAvailable;
+    document.getElementById('defend-btn').disabled = true;
+    document.getElementById('end-turn-btn').disabled = true;
+    
+    gameState.currentAttackTarget = enemy;
+    gameState.currentAttackCells = null;
+    
+    if (gameState.specialAttackMode) {
+        if (gameState.playerHero.type === 'Ninja') {
+            gameState.playerHero.useSpecialAbility();
+        } else if (gameState.playerHero.type === 'Chevalier') {
+            gameState.playerHero.useSpecialAbility();
+        }
+        updateHeroProfile();
     }
 }
 
@@ -969,7 +915,7 @@ function resolveNormalAttack(rollValue) {
         updateEnemiesInfo();
         placeHeroes();
         
-       
+        // Vérifier si tous les ennemis sont vaincus
         if (gameState.enemies.length === 0) {
             endGame(true);
             return;
@@ -1182,7 +1128,7 @@ function handleCellClick(event) {
             }
         }
     }
-    
+    // Cas où on clique sur une case non valide
     else if (gameState.attackingMode || gameState.movingMode || gameState.specialAttackMode) {
         resultDisplay.textContent = "Action impossible sur cette case";
     }
