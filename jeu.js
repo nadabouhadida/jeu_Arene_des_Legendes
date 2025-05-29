@@ -8,7 +8,7 @@ const HERO_CONFIG = {
         defense: 20, 
         range: 1, 
         move: 1,
-        image: 'D:/jeu_frontend/assests/chevalier.png'
+        image: './assests/chevalier.png'
     },
     'Ninja': { 
         health: 80, 
@@ -16,7 +16,7 @@ const HERO_CONFIG = {
         defense: 10, 
         range: 1, 
         move: 2,
-        image: 'D:/jeu_frontend/assests/ninja.png'
+        image: './assests/ninja.png'
     },
     'Sorcier': { 
         health: 70, 
@@ -24,7 +24,7 @@ const HERO_CONFIG = {
         defense: 5, 
         range: 3, 
         move: 1,
-        image: 'D:/jeu_frontend/assests/sorcier.png'
+        image: './assests/sorcier.png'
     }
 };
 
